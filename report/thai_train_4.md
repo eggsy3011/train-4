@@ -35,6 +35,9 @@ rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0
 
 yum install -y nginx
 
+![image](https://github.com/eggsy3011/train-4/assets/108015833/f11d435b-38fa-4d4b-acdb-aa9b5ff22eb3)
+
+
 3. Cài đặt PHP và Module
 
 yum-config-manager --enable remi-php73
@@ -43,14 +46,21 @@ yum install -y php php-fpm php-common
 
 yum install -y php-pecl-apcu php-cli php-pear php-pdo php-mysqlnd php-pecl-memcache php-pecl-memcached php-mbstring
 
+![image](https://github.com/eggsy3011/train-4/assets/108015833/627f4b24-1b35-4362-a5dc-652f7af0e71b)
+
+
 4. Cài đặt MariaDB #
 
 yum install -y mariadb mariadb-serverCopied!
+![image](https://github.com/eggsy3011/train-4/assets/108015833/28fc8193-7f06-4689-a36f-0154181492c0)
 
 Start MariaDB và bật khi khởi động:
 
 systemctl start mariadb.service
 systemctl enable mariadb.service
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/f7c265ce-373c-457a-b384-0f291d0bf7dc)
+
 
 Cài đặt ban đầu và cấu hình mật khẩu cho user root MariaDB
 
@@ -69,12 +79,18 @@ Remove test database and access to it? [Y/n] y
 Reload privilege tables now? [Y/n] y
 Thanks for using MariaDB!
 
+![image](https://github.com/eggsy3011/train-4/assets/108015833/7699c611-dbc4-4de8-ad65-cd26e81340c1)
+
+
 5. Cấu hình NGINX #
 
 Mở file config của NGINX để chỉnh sửa cấu hình:
 
 nano /etc/nginx/nginx.conf
 Chỉnh worker_processes bằng với số CPU trên server của bạn
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/bf9fd1a8-44ca-4f48-b9b6-2a843e285f7d)
+
 
 Cấu hình nginx virtual hosts
 
@@ -122,8 +138,6 @@ root   /usr/share/nginx/html;
 
 }
 
- 
-
 # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
 
 #
@@ -148,9 +162,15 @@ include        fastcgi_params;
 
 Lưu lại và restart dịch vụ để áp dụng cấu hình.
 
+![image](https://github.com/eggsy3011/train-4/assets/108015833/8754ee0b-befe-4a9a-8d57-39c69ba08930)
+
+
 systemctl stop nginx.service
 
 systemctl start nginx.service
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/24e1aed1-6c41-426d-bd2d-952474ff924e)
+
 
 6. Cấu hình PHP-FPM #
 
@@ -160,10 +180,13 @@ nano /etc/php-fpm.d/www.conf
 user = nginx
 group = nginx
 
+![image](https://github.com/eggsy3011/train-4/assets/108015833/0e676491-9738-4424-b42d-a54c903f716f)
+
 Restart dịch vụ php-fpm
 
 systemctl stop php-fpm.service
 systemctl start php-fpm.service
+![image](https://github.com/eggsy3011/train-4/assets/108015833/9bc165ec-ca10-4c4f-a168-c034a5b86186)
 
 7. Cấu hình firewalld #
 
@@ -181,9 +204,40 @@ Thêm đoạn sau và lưu lại:
 <?php
 phpinfo();
 ?>
+![image](https://github.com/eggsy3011/train-4/assets/108015833/6d2cc326-9cc7-47dc-934f-4468f43a4ef6)
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/005a010c-e3ed-4013-8a28-fe935e3ded53)
+
+Wordpress:
+cd /tmp
+wget https://wordpress.org/latest.tar.gz
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/db56b337-69b0-4b5c-aef4-22cbc3b4c7f1)
+
+tar -xzf latest.tar.gz
+sudo mv wordpress/* /var/www/your_domain
+![image](https://github.com/eggsy3011/train-4/assets/108015833/93ff5e69-d169-4628-8542-6b550d6c7638)
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/ca125776-9d1c-4179-9100-5847b4aa79d1)
+
+Cấp quyền thư mục:
+
+sudo chown -R nginx:nginx /var/www/your_domain
+sudo chmod -R 755 /var/www/your_domain
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/c63b728c-308c-4d67-abb8-7a17bf6c98d7)
+Cấu hình WordPress:
+Tạo file cấu hình WordPress:
+
+sudo cp /var/www/your_domain/wp-config-sample.php /var/www/your_domain/wp-config.php
+sudo vi /var/www/your_domain/wp-config.php
+![image](https://github.com/eggsy3011/train-4/assets/108015833/4304a67f-e0c0-4ad6-a174-4bb61669fd52)
+
+ ![image](https://github.com/eggsy3011/train-4/assets/108015833/3364e376-c2c7-44e3-b64a-77345633d0fc)
+
+ 
 
 
-Wordpress
 
 Laravel
 
