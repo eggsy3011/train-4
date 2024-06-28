@@ -20,6 +20,169 @@ Trình bày lại các vấn đề đã tìm hiểu về apache, nginx, http ret
 
 Cài đặt LEMP / LAMP / reverse proxy
 
+
+Cài đặt LEMP bao gồm các bước sau:
+
+yum install epel-release
+
+rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+
+rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/5c4ac41f-0400-46fd-9702-06a830125eb1)
+
+2. Cài đặt NGINX
+
+yum install -y nginx
+
+3. Cài đặt PHP và Module
+
+yum-config-manager --enable remi-php73
+
+yum install -y php php-fpm php-common
+
+yum install -y php-pecl-apcu php-cli php-pear php-pdo php-mysqlnd php-pecl-memcache php-pecl-memcached php-mbstring
+
+4. Cài đặt MariaDB #
+
+yum install -y mariadb mariadb-serverCopied!
+
+Start MariaDB và bật khi khởi động:
+
+systemctl start mariadb.service
+systemctl enable mariadb.service
+
+Cài đặt ban đầu và cấu hình mật khẩu cho user root MariaDB
+
+mysql_secure_installation
+
+Thực hiện các câu hỏi tiếp theo khi chạy lệnh này:
+
+Enter current password for root (enter for none): Enter
+Set root password? [Y/n] y
+New password:
+Re-enter new password:
+Password updated successfully!
+Remove anonymous users? [Y/n] y
+Disallow root login remotely? [Y/n] y
+Remove test database and access to it? [Y/n] y
+Reload privilege tables now? [Y/n] y
+Thanks for using MariaDB!
+
+5. Cấu hình NGINX #
+
+Mở file config của NGINX để chỉnh sửa cấu hình:
+
+nano /etc/nginx/nginx.conf
+Chỉnh worker_processes bằng với số CPU trên server của bạn
+
+Cấu hình nginx virtual hosts
+
+nano /etc/nginx/conf.d/default.conf
+
+Sửa lại nội dung file như sau:
+
+############
+
+server {
+
+listen       80 default_server;
+
+server_name example.com;
+
+ 
+
+location / {
+
+root   /var/www/html;
+
+index index.php index.html index.htm;
+
+try_files $uri $uri/ /index.php?q=$uri&$args;
+
+}
+
+ 
+
+error_page  404     /404.html;
+
+location = /404.html {
+
+root   /usr/share/nginx/html;
+
+}
+
+ 
+
+error_page   500 502 503 504  /50x.html;
+
+location = /50x.html {
+
+root   /usr/share/nginx/html;
+
+}
+
+ 
+
+# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+
+#
+
+location ~ \.php$ {
+
+root           /var/www/html;
+
+fastcgi_pass 127.0.0.1:9000;
+
+fastcgi_index index.php;
+
+fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
+
+include        fastcgi_params;
+
+}
+
+}
+
+############
+
+Lưu lại và restart dịch vụ để áp dụng cấu hình.
+
+systemctl stop nginx.service
+
+systemctl start nginx.service
+
+6. Cấu hình PHP-FPM #
+
+Chỉnh sửa user và group
+
+nano /etc/php-fpm.d/www.conf
+user = nginx
+group = nginx
+
+Restart dịch vụ php-fpm
+
+systemctl stop php-fpm.service
+systemctl start php-fpm.service
+
+7. Cấu hình firewalld #
+
+firewall-cmd --permanent --add-port=80/tcp
+firewall-cmd --permanent --add-port=443/tcp
+firewall-cmd –reload
+8. Kiểm tra hoạt động #
+
+Chạy một file info.php để kiểm tra có Web Server có hoạt động hay không
+
+nano /var/www/html/info.php
+
+Thêm đoạn sau và lưu lại:
+
+<?php
+phpinfo();
+?>
+
+
 Wordpress
 
 Laravel
