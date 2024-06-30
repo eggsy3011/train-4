@@ -235,16 +235,116 @@ sudo vi /var/www/your_domain/wp-config.php
 
 ![image](https://github.com/eggsy3011/train-4/assets/108015833/3364e376-c2c7-44e3-b64a-77345633d0fc)
 
- 
-Laravel
-
-SSL
 
 Bài tập 2: 
 
-Sử dụng 1 vps cài đặt mô hình LAMP / LEMP / reverse proxy
+Sử dụng 1 vps cài đặt mô hình LEMP 
 
-Tạo 2 vhost: <name>.wordpress.zonecloud.co <name>.laravel.zonecloud.co
+Cài đặt Apache:
+sudo yum install httpd -y
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/a6cc37c0-6482-4697-b177-87439b5008b5)
+
+Khởi động và bật Apache khởi động cùng hệ thống:
+
+sudo systemctl start httpd
+
+sudo systemctl enable httpd
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/8cbfe435-d9de-401c-8c11-fa612c398caf)
+
+
+Cài đặt MySQL (MariaDB):
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/5e3c7389-c234-4c62-81dc-3346e11a1fc1)
+
+Thiết lập bảo mật cho MariaDB:
+
+sudo mysql_secure_installation
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/16ea6dd4-90c3-4a5d-a093-8f96a8981bd1)
+
+Cài đặt PHP:
+
+sudo yum install php php-mysql -y
+
+Khởi động lại Apache để PHP hoạt động:
+
+sudo systemctl restart httpd
+
+Kiểm tra PHP:
+
+Tạo một tệp thông tin PHP để kiểm tra PHP hoạt động đúng cách:
+
+echo "<?php phpinfo(); ?>" | sudo tee /var/www/html/info.php
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/43a16fda-3fa2-4dea-93c1-6036e55944b2)
+
+ Tạo Virtual Hosts cho WordPress và Laravel
+   
+Tạo thư mục cho các trang web:
+
+sudo mkdir -p /var/www/<name>.wordpress.zonecloud.co
+
+sudo mkdir -p /var/www/<name>.laravel.zonecloud.co
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/8c85cde7-1b63-4abd-b491-cd5fce7061aa)
+
+Thiết lập quyền sở hữu và phân quyền:
+
+sudo chown -R $USER:$USER /var/www/example.wordpress.zonecloud.co
+
+sudo chown -R $USER:$USER /var/www/example.laravel.zonecloud.co
+
+sudo chmod -R 755 /var/www
+![image](https://github.com/eggsy3011/train-4/assets/108015833/9a29cf46-e776-4a23-a462-0c349bec3a06)
+
+Tạo tệp cấu hình Virtual Host cho WordPress:
+
+sudo nano /etc/httpd/conf.d/example.wordpress.zonecloud.co.conf
+
+Trong nano ta config: 
+
+<VirtualHost *:80>
+    ServerAdmin admin@zonecloud.co
+    DocumentRoot /var/www/example.wordpress.zonecloud.co
+    ServerName example.wordpress.zonecloud.co
+    ErrorLog /var/log/httpd/example.wordpress.zonecloud.co-error.log
+    CustomLog /var/log/httpd/example.wordpress.zonecloud.co-access.log combined
+</VirtualHost>
+
+Tạo tệp cấu hình Virtual Host cho Laravel:
+
+sudo nano /etc/httpd/conf.d/example.laravel.zonecloud.co.conf
+
+Trong nano ta config: 
+
+<VirtualHost *:80>
+    ServerAdmin admin@zonecloud.co
+    DocumentRoot /var/www/example.laravel.zonecloud.co/public
+    ServerName example.laravel.zonecloud.co
+    ErrorLog /var/log/httpd/example.laravel.zonecloud.co-error.log
+    CustomLog /var/log/httpd/example.laravel.zonecloud.co-access.log combined
+</VirtualHost>
+
+Cài đặt Certbot:
+
+sudo yum install certbot python3-certbot-apache -y
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/8c62dc4e-e181-4eb7-9710-4c9ce143e74c)
+
+sudo certbot --apache -d example.wordpress.zonecloud.co
+
+sudo certbot --apache -d example.laravel.zonecloud.co
+
+Đặt lại mật khẩu người dùng root của MySQL
+
+Đăng nhập vào MySQL:
+sudo systemctl start mariadb
+
+sudo mysql
+
+
 
 Source: wordpress -> <name>.wordpress.zonecloud.co laravel -> <name>.laravel.zonecloud.co
 
@@ -256,4 +356,4 @@ Mở remote mysql port 3306 cho phép bên ngoài truy cập
 
 Thực hiện reset pass user admin (hoặc bất kì user nào bạn tạo lúc cài đặt wordpress).
 
-Bài tập: Trình bày lại phần lab tại: <name>/hosting-webserver/reverse-proxy/wordpres-laravel.md
+
