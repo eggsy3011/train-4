@@ -440,10 +440,6 @@ Source: wordpress -> <name>.wordpress.zonecloud.co laravel -> <name>.laravel.zon
 
 Setup SSL cho cả 2 domain
 
-Reset passwd mysql user root
 
-Mở remote mysql port 3306 cho phép bên ngoài truy cập
-
-Thực hiện reset pass user admin (hoặc bất kì user nào bạn tạo lúc cài đặt wordpress).
 
 
