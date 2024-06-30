@@ -1,18 +1,67 @@
 Nginx / Apache 
 
-Tìm hiểu Nginx là gì
+# Tìm hiểu Nginx là gì:
 
-Tìm hiểu Apache là gì
+Nginx (phát âm là "Engine-X") là một máy chủ web mã nguồn mở có hiệu suất cao được phát triển bởi Igor Sysoev
 
-HTTP return code
+# Tìm hiểu Apache là gì:
 
-200
+Apache HTTP Server, thường gọi là Apache, là một trong những máy chủ web phổ biến nhất hiện nay. Apache được phát triển bởi Apache Software Foundation và là một phần của dự án mã nguồn mở.
 
-301, 307
+# HTTP return code
 
-400, 401, 403, 404, 406, 408, 422
+# 200 :
 
-500, 502, 504
+Mã phản hồi này chỉ ra rằng yêu cầu của client đã thành công và máy chủ đã trả về tài nguyên yêu cầu.
+
+# 301, 307
+
+301: Mã này chỉ ra rằng tài nguyên yêu cầu đã được di chuyển vĩnh viễn đến URL mới và tất cả các yêu cầu trong tương lai nên sử dụng URL mới này.
+
+307: Mã này chỉ ra rằng tài nguyên yêu cầu tạm thời được di chuyển đến URL mới. Client nên sử dụng URL gốc cho các yêu cầu trong tương lai.
+
+# 400, 401, 403, 404, 406, 408, 422
+400: Bad Request
+
+Mã này chỉ ra rằng yêu cầu từ client có cú pháp không đúng hoặc không thể hiểu được bởi máy chủ.
+
+401: Unauthorized
+
+Mã này chỉ ra rằng yêu cầu cần phải xác thực. Client cần cung cấp thông tin đăng nhập hợp lệ.
+
+403: Forbidden
+
+Mã này chỉ ra rằng máy chủ đã hiểu yêu cầu nhưng từ chối thực hiện nó. Điều này thường do quyền truy cập bị hạn chế.
+
+404: Not Found
+
+Mã này chỉ ra rằng máy chủ không thể tìm thấy tài nguyên yêu cầu. URL yêu cầu không tồn tại trên máy chủ.
+
+406: Not Acceptable
+
+Mã này chỉ ra rằng máy chủ không thể tạo phản hồi phù hợp với các tiêu chí do client đặt ra trong tiêu đề Accept.
+
+408: Request Timeout
+
+Mã này chỉ ra rằng máy chủ không nhận được yêu cầu đầy đủ từ client trong khoảng thời gian quy định.
+
+422: Unprocessable Entity
+
+Mã này chỉ ra rằng máy chủ hiểu nội dung loại phương tiện của yêu cầu nhưng không thể xử lý nó do lỗi ngữ nghĩa.
+
+# 500, 502, 504
+
+500: Internal Server Error
+
+Mã này chỉ ra rằng máy chủ gặp lỗi nội bộ và không thể hoàn thành yêu cầu của client.
+
+502: Bad Gateway
+
+Mã này chỉ ra rằng máy chủ, hoạt động như một gateway hoặc proxy, nhận được phản hồi không hợp lệ từ máy chủ ngược dòng.
+
+504: Gateway Timeout
+
+Mã này chỉ ra rằng máy chủ, hoạt động như một gateway hoặc proxy, không nhận được phản hồi kịp thời từ máy chủ ngược dòng.
 
 Bài tập 1: 
 
@@ -23,9 +72,12 @@ Cài đặt LEMP / LAMP / reverse proxy
 
 Cài đặt LEMP bao gồm các bước sau:
 
+```
 yum install epel-release
-
+```
+```
 rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+```
 
 rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
 
@@ -260,7 +312,7 @@ Cài đặt MySQL (MariaDB):
 
 Thiết lập bảo mật cho MariaDB:
 
-sudo mysql_secure_installation
+sudo mysql_secure_installatio
 
 ![image](https://github.com/eggsy3011/train-4/assets/108015833/16ea6dd4-90c3-4a5d-a093-8f96a8981bd1)
 
@@ -336,14 +388,6 @@ sudo yum install certbot python3-certbot-apache -y
 sudo certbot --apache -d example.wordpress.zonecloud.co
 
 sudo certbot --apache -d example.laravel.zonecloud.co
-
-Đặt lại mật khẩu người dùng root của MySQL
-
-Đăng nhập vào MySQL:
-sudo systemctl start mariadb
-
-sudo mysql
-
 
 
 Source: wordpress -> <name>.wordpress.zonecloud.co laravel -> <name>.laravel.zonecloud.co
