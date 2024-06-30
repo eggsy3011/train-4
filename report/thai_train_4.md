@@ -233,12 +233,9 @@ sudo cp /var/www/your_domain/wp-config-sample.php /var/www/your_domain/wp-config
 sudo vi /var/www/your_domain/wp-config.php
 ![image](https://github.com/eggsy3011/train-4/assets/108015833/4304a67f-e0c0-4ad6-a174-4bb61669fd52)
 
- ![image](https://github.com/eggsy3011/train-4/assets/108015833/3364e376-c2c7-44e3-b64a-77345633d0fc)
+![image](https://github.com/eggsy3011/train-4/assets/108015833/3364e376-c2c7-44e3-b64a-77345633d0fc)
 
  
-
-
-
 Laravel
 
 SSL
