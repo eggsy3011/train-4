@@ -327,8 +327,11 @@ Cấu hình MariaDB:
 mysql -u root -p
 
 CREATE DATABASE wordpress;
+
 CREATE USER 'wpuser'@'localhost' IDENTIFIED BY 'password';
+
 GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'localhost';
+
 FLUSH PRIVILEGES;
 EXIT;
 ![image](https://github.com/eggsy3011/train-4/assets/108015833/0c6d2f33-24f4-481f-9ae4-49a1615fe384)
@@ -443,12 +446,14 @@ sudo systemctl enable httpd
 
 # Cài đặt MySQL (MariaDB):
 
+
 ![image](https://github.com/eggsy3011/train-4/assets/108015833/5e3c7389-c234-4c62-81dc-3346e11a1fc1)
 
 # Thiết lập bảo mật cho MariaDB:
 ```
 sudo mysql_secure_installatio
 ```
+
 ![image](https://github.com/eggsy3011/train-4/assets/108015833/16ea6dd4-90c3-4a5d-a093-8f96a8981bd1)
 
 # Cài đặt PHP:
@@ -465,6 +470,7 @@ sudo systemctl restart httpd
 ```
 echo "<?php phpinfo(); ?>" | sudo tee /var/www/html/info.php
 ```
+
 ![image](https://github.com/eggsy3011/train-4/assets/108015833/d6687c4a-cd41-403e-8ba4-aa22b6c43cb5)
 
  # Tạo Virtual Hosts cho WordPress và Laravel
@@ -476,7 +482,9 @@ sudo mkdir -p /var/www/<name>.wordpress.zonecloud.co
 ```
 sudo mkdir -p /var/www/<name>.laravel.zonecloud.co
 ```
+
 ![image](https://github.com/eggsy3011/train-4/assets/108015833/8c85cde7-1b63-4abd-b491-cd5fce7061aa)
+
 
 # Thiết lập quyền sở hữu và phân quyền:
 ```
@@ -488,7 +496,9 @@ sudo chown -R $USER:$USER /var/www/example.laravel.zonecloud.co
 ```
 sudo chmod -R 755 /var/www
 ```
+
 ![image](https://github.com/eggsy3011/train-4/assets/108015833/9a29cf46-e776-4a23-a462-0c349bec3a06)
+
 
 # Tạo tệp cấu hình Virtual Host cho WordPress:
 ```
@@ -523,7 +533,11 @@ Trong nano ta config:
 ```
 sudo yum install certbot python3-certbot-apache -y
 ```
+
+
 ![image](https://github.com/eggsy3011/train-4/assets/108015833/8c62dc4e-e181-4eb7-9710-4c9ce143e74c)
+
+
 ```
 sudo certbot --apache -d example.wordpress.zonecloud.co
 ```
