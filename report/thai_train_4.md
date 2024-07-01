@@ -287,6 +287,10 @@ phpinfo();
 
 ![image](https://github.com/eggsy3011/train-4/assets/108015833/005a010c-e3ed-4013-8a28-fe935e3ded53)
 
+update lên 7.4: 
+![image](https://github.com/eggsy3011/train-4/assets/108015833/9a0f762a-1de9-4ad1-826e-c10c09216edc)
+
+
 # Wordpress:
 ```
 cd /tmp
