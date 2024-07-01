@@ -292,42 +292,133 @@ update lên 7.4:
 
 
 # Wordpress:
-```
-cd /tmp
-```
-```
-wget https://wordpress.org/latest.tar.gz
-```
-![image](https://github.com/eggsy3011/train-4/assets/108015833/db56b337-69b0-4b5c-aef4-22cbc3b4c7f1)
-```
-tar -xzf latest.tar.gz
-```
-```
-sudo mv wordpress/* /var/www/your_domain
-```
-![image](https://github.com/eggsy3011/train-4/assets/108015833/93ff5e69-d169-4628-8542-6b550d6c7638)
 
-![image](https://github.com/eggsy3011/train-4/assets/108015833/ca125776-9d1c-4179-9100-5847b4aa79d1)
+Cài đặt Apache, PHP và MariaDB
+```
+sudo yum install httpd -y
+```
+```
+sudo yum install mariadb-server mariadb -y
+```
+```
+sudo yum install php php-mysqlnd php-fpm php-json php-common php-zip php-gd php-mbstring php-xml php-curl php-xmlrpc -y
+```
+![image](https://github.com/eggsy3011/train-4/assets/108015833/6707fbc6-b145-4e1d-817a-8fc698abf20c)
 
-# Cấp quyền thư mục:
+Khởi động và bật dịch vụ Apache và MariaDB:
 ```
-sudo chown -R nginx:nginx /var/www/your_domain
-```
-```
-sudo chmod -R 755 /var/www/your_domain
-```
-![image](https://github.com/eggsy3011/train-4/assets/108015833/c63b728c-308c-4d67-abb8-7a17bf6c98d7)
-# Cấu hình WordPress:
-# Tạo file cấu hình WordPress:
-```
-sudo cp /var/www/your_domain/wp-config-sample.php /var/www/your_domain/wp-config.php
+sudo systemctl start httpd
 ```
 ```
-sudo vi /var/www/your_domain/wp-config.php
+sudo systemctl enable httpd
 ```
-![image](https://github.com/eggsy3011/train-4/assets/108015833/4304a67f-e0c0-4ad6-a174-4bb61669fd52)
+sudo systemctl status httpd 
+```
+![image](https://github.com/eggsy3011/train-4/assets/108015833/8757fc1d-6bea-4482-9299-78e2a2bfcb25)
 
-![image](https://github.com/eggsy3011/train-4/assets/108015833/3364e376-c2c7-44e3-b64a-77345633d0fc)
+```
+sudo systemctl start mariadb
+```
+```
+sudo systemctl enable mariadb
+```
+Cấu hình MariaDB: 
+
+mysql -u root -p
+
+CREATE DATABASE wordpress;
+CREATE USER 'wpuser'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+![image](https://github.com/eggsy3011/train-4/assets/108015833/0c6d2f33-24f4-481f-9ae4-49a1615fe384)
+
+Tải xuống và cài đặt WordPress
+
+Tải xuống WordPress và giải nén nó vào thư mục gốc của máy chủ web:
+```
+cd /var/www/html
+```
+```
+sudo wget https://wordpress.org/latest.tar.gz
+```
+![image](https://github.com/eggsy3011/train-4/assets/108015833/efdf9429-cbec-4b02-829b-33cb13d20c55)
+
+```
+sudo tar -xzvf latest.tar.gz
+```
+![image](https://github.com/eggsy3011/train-4/assets/108015833/fcb058bc-04ff-4ff3-9387-18d429d8741f)
+```
+sudo mv wordpress/* .
+```
+```
+sudo rm -rf wordpress latest.tar.gz
+```
+
+Thiết lập quyền cho các tệp WordPress:
+```
+sudo chown -R apache:apache /var/www/html/*
+```
+```
+sudo chmod -R 755 /var/www/html/*
+```
+![image](https://github.com/eggsy3011/train-4/assets/108015833/8dbd63dd-d618-48e1-879b-bf2f9a973e6d)
+
+
+4. Cấu hình Apache cho WordPress
+
+Tạo tệp cấu hình máy chủ ảo cho WordPress:
+```
+sudo nano /etc/httpd/conf.d/wordpress.conf
+```
+
+<VirtualHost *:80>
+    ServerAdmin admin@example.com
+    DocumentRoot "/var/www/html"
+    ServerName example.com
+    ServerAlias www.example.com
+
+    <Directory "/var/www/html">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog "/var/log/httpd/wordpress_error.log"
+    CustomLog "/var/log/httpd/wordpress_access.log" combined
+</VirtualHost>
+![image](https://github.com/eggsy3011/train-4/assets/108015833/a9424744-f245-461d-9036-d3df2ea35450)
+
+
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/a4d689ee-3e13-4391-ac91-add735d353bd)
+
+5. Cấu hình WordPress:
+```
+cd /var/www/html
+```
+```
+cp wp-config-sample.php wp-config.php
+```
+```
+nano wp-config.php
+```
+define('DB_NAME', 'wordpress');
+define('DB_USER', 'wpuser');
+define('DB_PASSWORD', 'password');
+define('DB_HOST', 'localhost');
+
+![image](https://github.com/eggsy3011/train-4/assets/108015833/fdddbe2b-8ca8-463a-bfc2-61b0a2e7d44b)
+
+
+
+
+
+
+
+
+
+
 
 
 # Bài tập 2: 
