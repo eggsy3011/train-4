@@ -370,7 +370,7 @@ sudo systemctl restart httpd
 ```
 echo "<?php phpinfo(); ?>" | sudo tee /var/www/html/info.php
 ```
-![image](https://github.com/eggsy3011/train-4/assets/108015833/43a16fda-3fa2-4dea-93c1-6036e55944b2)
+![image](https://github.com/eggsy3011/train-4/assets/108015833/d6687c4a-cd41-403e-8ba4-aa22b6c43cb5)
 
  # Tạo Virtual Hosts cho WordPress và Laravel
    
