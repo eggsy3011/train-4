@@ -85,7 +85,7 @@ rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0
 
 # 2. Cài đặt NGINX
 ```
-yum install -y nginx
+yum install -y nginx   Thêm link mới rpm -Uvh --force http://nginx.org/packages/centos/7/x86_64/RPMS/nginx-1.20.2-1.el7.ngx.x86_64.rpm
 ```
 ![image](https://github.com/eggsy3011/train-4/assets/108015833/f11d435b-38fa-4d4b-acdb-aa9b5ff22eb3)
 
